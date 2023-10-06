@@ -5,6 +5,12 @@
  * Повертаємо - Створений словник (Map).
  */
 function createDictionary(entries) {
+  const dictionary = new Map();
+  entries.forEach ((value, key) => {
+    dictionary.set(value, key)
+  });
+  return dictionary;
+  
   // Створення порожнього словника
   // Використання методу forEach для перебору масиву пар ключ-значення
   // Додавання пари ключ-значення до словника за допомогою методу set
@@ -37,6 +43,16 @@ console.log(
  * Повертає - Об'єкт, що містить ключі та значення з вхідного словника.
  */
 function convertMapToObject(map) {
+  let dictionary = new Object();
+  console.log(typeof dictionary);
+  map.forEach((name, age, city) => {
+    dictionary = {
+      name: name,
+      age: age,
+      city: city, 
+    }
+  }) 
+  return dictionary;
   // Перебираємо ключі та значення в словнику
   // Додаємо ключ та значення до об'єкту
   // Повертаємо отриманий об'єкт
