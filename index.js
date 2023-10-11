@@ -6,7 +6,7 @@
  */
 function createDictionary(entries) {
   const dictionary = new Map();
-  entries.forEach ((value, key) => {
+  entries.forEach (([key, value]) => {
     dictionary.set(value, key)
   });
   return dictionary;
@@ -44,14 +44,9 @@ console.log(
  */
 function convertMapToObject(map) {
   let dictionary = new Object();
-  console.log(typeof dictionary);
-  map.forEach((name, age, city) => {
-    dictionary = {
-      name: name,
-      age: age,
-      city: city, 
-    }
-  }) 
+  for (let [key, value] of map) {
+    dictionary[key] = value;
+  }
   return dictionary;
   // Перебираємо ключі та значення в словнику
   // Додаємо ключ та значення до об'єкту
@@ -194,13 +189,12 @@ console.log(
 function addKeyValuePairs(dictionary, entries) {
   let added = 0;
   let rejected = 0;
-  entries.forEach(key => {
-    if(dictionary.has(key) === true) {
-      rejected++;
-    }  
-    if(dictionary.has(key) === false) {
-      dictionary.set(key);
+  entries.forEach(([key, value]) => {
+    if(!dictionary.has(key)) {
+      dictionary.set(key, value);
       added++;
+    } else {
+      rejected++;
     }
   })
   return { 
@@ -336,10 +330,9 @@ console.log(
  */
 function getFilteredDictionarySize(dictionary, filter) {
   let map = new Map();
-  const iterator = dictionary.entries();
-  for (const [key, value] of iterator) {
-    if(dictionary.has(filter) === true) {
-      map.set(iterator(key, value));
+  for (let [key, value] of dictionary.entries()) {
+    if(filter(key, value)) {
+      map.set(key, value);
     }
   }
   return map.size;
@@ -372,10 +365,9 @@ console.log(
  * Повертаємо - Відсортований словник.
  */
 function sortByValues(dictionary) {
-  let [ key, value ] = dictionary;
-  dictionary.sort;
-  [key, value] = dictionary;
-  return dictionary;
+  let entries = [...dictionary.entries()];
+  entries.sort((a, b) => b[1] - a[1]);
+  return new Map(entries);
   // Конвертуємо словник в масив пар ключ-значення за допомогою оператора деструктурізації
   // Сортуємо масив пар ключ-значення за значеннями в порядку спадання
   // Конвертуємо відсортований масив пар ключ-значення назад у словник
